@@ -85,3 +85,72 @@ Run
 isaac-sim.bat
 ```
 Enable omni.isaac.ros2_bridge from the extension manager window.
+
+## Install WSL2
+
+In the Start Menu, find the "x64 Native Tools Command Prompt for VS 2019" item.
+Right Click, select More then "Run as Administrator"
+
+```
+wsl --install
+```
+
+Restart after installation.
+
+Then run:
+```
+wsl --install -d Ubuntu-20.04
+```
+Setup username and password
+Restart your computer to finish installation on Windows.
+
+To login to the linux system in wsl
+```
+wsl --distribution Ubuntu-20.04 --user <user_name>
+```
+## Install Ros2 Foxy in WSL
+
+Run the following commands.
+
+```
+sudo apt update
+sudo apt upgrade
+```
+Make sure you have a locale which supports UTF-8
+```
+locale  # check for UTF-8
+
+sudo apt update && sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+locale  # verify settings
+```
+
+Ensure that the Ubuntu Universe repository is enabled.
+
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+
+Now add the ROS 2 GPG key with apt.
+
+sudo apt update && sudo apt install curl -y
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+
+Then add the repository to your sources list.
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+Update your apt repository caches after setting up the repositories.
+
+```
+sudo apt update
+sudo apt upgrade
+```
+
+Desktop Install (Recommended): ROS, RViz, demos, tutorials.
+``
+sudo apt install ros-foxy-desktop python3-argcomplete
+
+``
