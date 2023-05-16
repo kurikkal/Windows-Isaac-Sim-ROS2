@@ -129,19 +129,19 @@ locale  # verify settings
 ```
 
 Ensure that the Ubuntu Universe repository is enabled.
-
+```
 sudo apt install software-properties-common
 sudo add-apt-repository universe
-
+```
 Now add the ROS 2 GPG key with apt.
-
+```
 sudo apt update && sudo apt install curl -y
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-
+```
 Then add the repository to your sources list.
-
+```
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-
+```
 Update your apt repository caches after setting up the repositories.
 
 ```
@@ -150,7 +150,30 @@ sudo apt upgrade
 ```
 
 Desktop Install (Recommended): ROS, RViz, demos, tutorials.
-``
+```
 sudo apt install ros-foxy-desktop python3-argcomplete
 
-``
+```
+
+Set up your environment by sourcing the following file.
+```
+# Replace ".bash" with your shell if you're not using bash
+# Possible values are: setup.bash, setup.sh, setup.zsh
+source /opt/ros/foxy/setup.bash
+```
+
+Isaac sim is already connected to ROS2 Foxy installed in windows. ROS2 Foxy in the Linux system would automatically communicate with its version in windows. verify it using the following commands.
+
+Run in Linux (wsl) terminal:
+```
+source /opt/ros/foxy/setup.bash
+ros2 run demo_nodes_cpp talker
+```
+Run in windows terminal:
+```
+c:\opt\ros\foxy\x64\setup.bat
+ros2 run demo_nodes_py listener
+```
+
+You can see the data published in wsl terminal in windows terminal.
+
